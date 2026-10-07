@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Practice Activity: Phonemic Segmentation Fluency (PSF)</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; padding: 16px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; color: #2c3e50; line-height: 1.6; }
+  .container { width: 100%; max-width: 900px; margin: 0 auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); padding: 28px; overflow-wrap: break-word; }
+  .header { border-bottom: 4px solid #ffc629; padding-bottom: 14px; margin-bottom: 20px; }
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #7f8c8d; }
+  h1 { margin: 4px 0 6px; font-size: 26px; font-weight: 600; color: #000; }
+  .subtitle { margin: 0; color: #7f8c8d; font-size: 15px; }
+
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+  .tab { font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; padding: 9px 16px; border-radius: 6px; border: 2px solid #000; background: #fff; color: #000; }
+  .tab:hover { background: #fff3cf; }
+  .tab.active { background: #000; color: #ffc629; }
+
+  .script { background: #fffbf0; border-left: 4px solid #ffc629; border-radius: 6px; padding: 16px 18px; margin-bottom: 22px; font-size: 14px; line-height: 1.7; }
+  .script .block + .block { margin-top: 12px; }
+  .script strong.label { display: block; color: #000; margin-bottom: 2px; }
+  .script table { border-collapse: collapse; margin-top: 6px; width: 100%; font-size: 13px; background: #fff; }
+  .script td { border: 1px solid #e3d6a8; padding: 6px 8px; vertical-align: top; }
+
+  .step-title { font-size: 18px; font-weight: 600; color: #000; margin: 0 0 6px; border-bottom: 2px solid #ffc629; display: inline-block; padding-bottom: 4px; }
+  .hint { font-size: 14px; color: #5f6b76; margin: 6px 0 14px; }
+
+  .key { display: flex; flex-wrap: wrap; gap: 10px 18px; font-size: 13px; background: #f9fbfc; border: 1px solid #e5e9ec; border-radius: 6px; padding: 10px 14px; margin-bottom: 14px; align-items: center; }
+  .key span.k { display: inline-flex; align-items: center; gap: 6px; }
+
+  .timer { font-family: 'Courier New', monospace; font-size: 40px; font-weight: 700; letter-spacing: 3px; text-align: center; color: #000; background: linear-gradient(135deg, #ffc629, #ffdc8a); border-radius: 8px; padding: 12px; margin-bottom: 14px; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .tool, .btn { font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; padding: 9px 14px; border-radius: 6px; border: 2px solid #000; background: #fff; color: #000; }
+  .tool:hover, .btn:hover { background: #fff3cf; }
+  .tool.active { background: #000; color: #ffc629; }
+  .btn.dark { background: #000; color: #fff; } .btn.dark:hover { background: #333; }
+  .btn.gold { background: #ffc629; border-color: #ffc629; } .btn.gold:hover { background: #ffb800; }
+  .btn.gray { border-color: #b0b3b2; color: #555; }
+  .spacer { flex: 1; }
+  .mode-note { font-size: 13px; font-weight: 600; color: #000; background: #fffbf0; border-left: 4px solid #ffc629; padding: 8px 12px; border-radius: 4px; margin-bottom: 12px; }
+
+  .list-card { border: 1px solid #ffe8a3; background: #fffdf6; border-radius: 8px; padding: 14px 16px; margin-bottom: 18px; }
+  .list-title { text-align: center; font-weight: 700; font-size: 18px; margin: 0 0 10px; color: #000; }
+  .row { display: grid; grid-template-columns: repeat(3, 1fr) 56px; gap: 8px; align-items: end; padding: 8px 0; border-bottom: 1px solid #e8dfc2; }
+  .row:last-child { border-bottom: none; }
+  .rowtotal { font-size: 14px; color: #000; text-align: right; font-weight: 700; white-space: nowrap; }
+  .rowtotal.dim { color: #b8bec3; font-weight: 600; }
+  .wcard { min-width: 0; padding: 4px 6px; border-radius: 6px; }
+  .wlabel { font-family: 'Courier New', monospace; font-weight: 700; font-size: 17px; color: #000; display: inline-block; padding: 0 2px; border-radius: 3px; }
+  .sounds { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 2px; }
+  .snd { font-family: Georgia, serif; font-size: 16px; cursor: pointer; padding: 3px 4px 2px; border: 1px solid transparent; border-radius: 4px; background: transparent; color: #2c3e50; position: relative; line-height: 1.2; }
+  .snd:hover { background: #ffe9a8; }
+  .snd.c { background: #e6f6e9; color: #14532d; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: #1e8e3e; }
+  .snd.i { color: #7b1e14; background-image: linear-gradient(to top right, transparent calc(50% - 1.5px), #c0392b calc(50% - 1.5px), #c0392b calc(50% + 1.5px), transparent calc(50% + 1.5px)); }
+  .snd.s { color: #7b1e14; background-image: linear-gradient(to top right, transparent calc(50% - 1.5px), #c0392b calc(50% - 1.5px), #c0392b calc(50% + 1.5px), transparent calc(50% + 1.5px)); background-color: #e6f6e9; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: #1e8e3e; }
+  .snd.s::before { content: 'SC'; position: absolute; top: -9px; left: 2px; font-family: 'Segoe UI', sans-serif; font-size: 9px; font-weight: 700; color: #1e8e3e; }
+  .snd.bracket::after { content: ' ]'; font-weight: 700; color: #000; background: #ffc629; border-radius: 2px; }
+  .snd.after { opacity: .4; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 14px; }
+  .stat { background: #fffbf0; border-left: 4px solid #ffc629; border-radius: 6px; padding: 12px; text-align: center; }
+  .stat .lbl { font-size: 11px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: #7f8c8d; }
+  .stat .val { font-size: 28px; font-weight: 700; color: #000; }
+  .note { background: #f0f0f0; border-left: 4px solid #b0b3b2; border-radius: 4px; padding: 12px 14px; font-size: 14px; }
+
+  @media (max-width: 640px) {
+    .container { padding: 16px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .row { grid-template-columns: 1fr 1fr 1fr 44px; gap: 4px; }
+    .snd { font-size: 14px; padding: 3px 2px 2px; }
+    .wlabel { font-size: 15px; }
+    .timer { font-size: 32px; }
+    h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="container" id="capture">
+
+  <div class="header">
+    <div class="eyebrow">Practice Activity</div>
+    <h1>Scoring Phonemic Segmentation Fluency</h1>
+    <p class="subtitle" id="subtitle"></p>
+  </div>
+
+  <div class="tabs" data-html2canvas-ignore="true">
+    <button class="tab active" data-set="0" onclick="loadSet(0)">Practice 1</button>
+    <button class="tab" data-set="1" onclick="loadSet(1)">Practice 2</button>
+    <button class="tab" data-set="2" onclick="loadSet(2)">Practice 3</button>
+  </div>
+
+  <div class="script">
+    <div class="block">
+      <strong class="label">Examiner script</strong>
+      "I am going to say a word. After I say it, you tell me all the sounds in the word. So, if I say 'am,' you would say /a/ /m/.<br>
+      Let's try one (1 second pause). Tell me the sounds in 'it'."
+      <table>
+        <tr><td style="width:50%"><strong>CORRECT</strong> &mdash; student says /i/ /t/</td><td>"Very good. The sounds in 'it' are /i/ /t/."</td></tr>
+        <tr><td><strong>INCORRECT</strong> &mdash; student gives any other response</td><td>"The sounds in 'it' are /i/ /t/. Your turn. Tell me the sounds in 'it.'"</td></tr>
+      </table>
+      "OK. Here is your first word."
+    </div>
+    <div class="block">
+      <strong class="label">Reminders</strong>
+      <strong>Start timer:</strong> after you give the first word.<br>
+      <strong>Prompts:</strong> if the student hesitates, wait 3 seconds, give the next word, and score the missed word as incorrect.<br>
+      <strong>Discontinue:</strong> <span id="discontinue"></span>
+    </div>
+  </div>
+
+  <h2 class="step-title">Score the student's response</h2>
+  <p class="hint">Click a sound to slash it when the student says it incorrectly (or omits it). Sounds you leave unmarked count as correct. Use the bracket tool to mark the last sound the student said when the timer ended. The tally at the end of each row shows sounds correct out of total and updates as you mark errors.</p>
+
+  <div class="key">
+    <strong>Key:</strong>
+    <span class="k"><span class="snd i">/s/</span> click a sound the student says incorrectly to slash it (click again to undo)</span>
+    <span class="k">Unmarked sounds count as correct (up to the bracket ], if you place one)</span>
+  </div>
+
+  <div class="timer" id="timer">0:00</div>
+
+  <div class="toolbar" data-html2canvas-ignore="true">
+    <button class="tool active" id="toolScore" onclick="setMode('score')">/ Mark incorrect</button>
+    <button class="tool" id="toolBracket" onclick="setMode('bracket')">] Last sound said</button>
+    <span class="spacer"></span>
+    <button class="btn dark" id="timerBtn" onclick="toggleTimer()">Start timer</button>
+    <button class="btn gray" onclick="resetAll()">&#8634; Reset</button>
+    <button class="btn gold" onclick="savePDF()">Save to PDF</button>
+  </div>
+  <div class="mode-note" id="modeNote" data-html2canvas-ignore="true"></div>
+
+  <div class="list-card">
+    <div class="list-title" id="listTitle">Word List</div>
+    <div id="list"></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="lbl">Sounds up to ]</div><div class="val" id="sRead">&mdash;</div></div>
+    <div class="stat"><div class="lbl">Incorrect</div><div class="val" id="sInc">0</div></div>
+    <div class="stat"><div class="lbl">Total correct</div><div class="val" id="sCorrect">&mdash;</div></div>
+  </div>
+  <div class="note"><strong>Total correct</strong> = all sounds (or sounds up to the bracket, if you place one) minus sounds marked incorrect. The tally at the end of each row shows correct / total sounds in that row.</div>
+</div>
+
+<script>
+  const SETS = [
+    { name: 'PSF Video Scoring Practice 1', bench: 'Benchmark PSF 1.End',
+      discontinue: 'if the student does not get any sounds correct in the first 5 words, discontinue PSF.',
+      rowTotals: [6,8,9,9,12,12,13,15,15,17],
+      rows: [
+        [['no','n O'],['my','m I'],['say','s A']],
+        [['all','o l'],['line','l I n'],['down','d ow n']],
+        [['safe','s A f'],['gas','g a s'],['ball','b o l']],
+        [['soon','s oo n'],['news','n oo z'],['gone','g o n']],
+        [['space','s p A s'],['still','s t i l'],['story','s t or E']],
+        [['hard','h o r d'],['leaves','l E v z'],['season','s E z n']],
+        [['speak','s p E k'],['enjoy','e n j oy'],['having','h a v i ng']],
+        [['women','w i m e n'],['powerful','p ow er f l'],['forget','f or g e t']],
+        [['radio','r A d E O'],['window','w i n d O'],['empty','e m p t E']],
+        [['island','I l a n d'],['behind','b E h I n d'],['history','h i s t or E']]
+      ] },
+    { name: 'PSF Video Scoring Practice 2', bench: 'Benchmark PSF K.Beginning',
+      discontinue: 'if the student does not get any sounds correct in the first 5 words, discontinue PSF; do not administer NWF and WRF.',
+      rowTotals: [6,6,9,9,9,9,9,9,9,9],
+      rows: [
+        [['my','m I'],['year','y ear'],['the','TH u']],
+        [['new','n oo'],['an','a n'],['at','a t']],
+        [['mine','m I n'],['wait','w A t'],['made','m A d']],
+        [['then','TH e n'],['both','b O th'],['chain','ch A n']],
+        [['man','m a n'],['store','s t or'],['blue','b l oo']],
+        [['ride','r I d'],['board','b or d'],['hill','h i l']],
+        [['piece','p E s'],['south','s ow th'],['rich','r i ch']],
+        [['safe','s A f'],['good','g uu d'],['half','h a f']],
+        [['wrote','r O t'],['week','w E k'],['few','f y oo']],
+        [['stay','s t A'],['hole','h O l'],['other','u TH er']]
+      ] },
+    { name: 'PSF Scoring Practice 3', bench: 'Benchmark PSF 1.Middle',
+      discontinue: 'if the student does not get any sounds correct in the first 5 words, discontinue PSF.',
+      rowTotals: [6,8,9,9,12,12,13,15,15,17],
+      rows: [
+        [['be','b E'],['who','h oo'],['say','s A']],
+        [['on','o n'],['said','s e d'],['came','k A m']],
+        [['wave','w A v'],['bought','b o t'],['talk','t o k']],
+        [['job','j o b'],['mouth','m ow th'],['allow','u l ow']],
+        [['skin','s k i n'],['just','j u s t'],['today','t oo d A']],
+        [['written','r i t n'],['plus','p l u s'],['story','s t or E']],
+        [['trip','t r i p'],['alone','u l O n'],['forward','f or w er d']],
+        [['center','s e n t er'],['winter','w i n t er'],['stand','s t a n d']],
+        [['warning','w or n i ng'],['pretty','p r i t E'],['safety','s A f t E']],
+        [['brother','b r u TH er'],['building','b i l d i ng'],['library','l I b r air E']]
+      ] }
+  ];
+
+  // marks[set] = array of sound states: 0 none, 1 correct, 2 incorrect, 3 self-corrected
+  const marks = [], brackets = [null, null, null];
+  let cur = 0, mode = 'score', seconds = 0, tick = null;
+
+  // Flatten each set into a list of sounds with global indices
+  SETS.forEach(s => {
+    let g = 0;
+    s.flat = s.rows.map(r => r.map(([w, snd]) => {
+      const sounds = snd.split(' ');
+      const out = { word: w, sounds, start: g };
+      g += sounds.length;
+      return out;
+    }));
+    s.total = g;
+    marks.push(new Array(g).fill(0));
+  });
+
+  // Self-check: row totals must match the printed form
+  SETS.forEach((s, si) => s.flat.forEach((row, ri) => {
+    const n = row.reduce((a, w) => a + w.sounds.length, 0);
+    if (n !== s.rowTotals[ri]) console.warn('Row total mismatch', si, ri, n, s.rowTotals[ri]);
+  }));
+
+  const listEl = document.getElementById('list');
+
+  function build() {
+    const s = SETS[cur];
+    document.getElementById('subtitle').textContent = 'DIBELS 8th Edition Phonemic Segmentation Fluency \u00b7 ' + s.bench;
+    document.getElementById('listTitle').textContent = s.name;
+    document.getElementById('discontinue').textContent = s.discontinue;
+    listEl.innerHTML = '';
+    s.flat.forEach((row, ri) => {
+      const r = document.createElement('div'); r.className = 'row';
+      row.forEach(w => {
+        const card = document.createElement('div'); card.className = 'wcard';
+        const lab = document.createElement('span'); lab.className = 'wlabel'; lab.textContent = w.word;
+        card.appendChild(lab);
+        const wrap = document.createElement('div'); wrap.className = 'sounds';
+        w.sounds.forEach((sn, k) => {
+          const b = document.createElement('span'); b.className = 'snd'; b.textContent = '/' + sn + '/';
+          b.dataset.g = w.start + k;
+          b.onclick = () => onSound(w.start + k);
+          wrap.appendChild(b);
+        });
+        card.appendChild(wrap);
+        r.appendChild(card);
+      });
+      const t = document.createElement('div'); t.className = 'rowtotal'; t.dataset.row = ri; t.textContent = s.rowTotals[ri] + '/' + s.rowTotals[ri];
+      r.appendChild(t);
+      listEl.appendChild(r);
+    });
+    render();
+  }
+
+  function onSound(g) {
+    if (mode === 'bracket') { brackets[cur] = (brackets[cur] === g) ? null : g; }
+    else { marks[cur][g] = marks[cur][g] === 2 ? 0 : 2; }
+    render();
+  }
+
+  function render() {
+    const m = marks[cur], br = brackets[cur], S = SETS[cur];
+    document.querySelectorAll('.snd[data-g]').forEach(el => {
+      const g = +el.dataset.g;
+      el.className = 'snd' + (m[g] === 2 ? ' i' : '');
+      if (br === g) el.classList.add('bracket');
+      if (br !== null && g > br) el.classList.add('after');
+    });
+    const limit = br === null ? S.total - 1 : br;   // no bracket yet: count every sound
+    let inc = 0;
+    for (let g = 0; g <= limit; g++) if (m[g] === 2) inc++;
+    // Row tallies: correct / total for each line (stops at the bracket once placed)
+    document.querySelectorAll('.rowtotal').forEach(el => {
+      const ri = +el.dataset.row, total = S.rowTotals[ri];
+      const start = S.flat[ri][0].start, end = start + total - 1;
+      if (start > limit) { el.textContent = '\u2014'; el.className = 'rowtotal dim'; return; }
+      const upto = Math.min(end, limit);
+      let c = 0;
+      for (let g = start; g <= upto; g++) if (m[g] !== 2) c++;
+      el.textContent = c + '/' + total;
+      el.className = 'rowtotal';
+    });
+    document.getElementById('sRead').textContent = br === null ? '\u2014' : br + 1;
+    document.getElementById('sInc').textContent = inc;
+    document.getElementById('sCorrect').textContent = limit + 1 - inc;
+  }
+
+  function setMode(md) {
+    mode = md;
+    document.getElementById('toolScore').classList.toggle('active', md === 'score');
+    document.getElementById('toolBracket').classList.toggle('active', md === 'bracket');
+    document.getElementById('modeNote').textContent = md === 'score'
+      ? 'Click a sound to slash it as incorrect. Unmarked sounds count as correct.'
+      : 'Click the last sound the student said when the timer ended.';
+  }
+
+  function loadSet(i) {
+    cur = i;
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', +t.dataset.set === i));
+    stopTimer(); seconds = 0; showTime();
+    setMode('score');
+    build();
+  }
+
+  function showTime() {
+    document.getElementById('timer').textContent = Math.floor(seconds / 60) + ':' + String(seconds % 60).padStart(2, '0');
+  }
+  function stopTimer() {
+    if (tick) { clearInterval(tick); tick = null; }
+    document.getElementById('timerBtn').textContent = 'Start timer';
+  }
+  function toggleTimer() {
+    if (tick) { stopTimer(); return; }
+    if (seconds >= 60) seconds = 0;
+    showTime();
+    document.getElementById('timerBtn').textContent = 'Stop timer';
+    tick = setInterval(() => {
+      seconds++; showTime();
+      if (seconds >= 60) {
+        stopTimer(); setMode('bracket');
+        document.getElementById('modeNote').textContent = 'Time! Click the last sound the student said to place the bracket.';
+      }
+    }, 1000);
+  }
+
+  function resetAll() {
+    marks[cur].fill(0); brackets[cur] = null;
+    stopTimer(); seconds = 0; showTime();
+    setMode('score'); render();
+  }
+
+  function savePDF() {
+    html2pdf().set({
+      margin: 8, filename: 'PSF_Scoring_Practice_' + (cur + 1) + '.pdf',
+      image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' },
+      pagebreak: { mode: ['css', 'legacy'] }
+    }).from(document.getElementById('capture')).save();
+  }
+
+  setMode('score');
+  build();
+</script>
+</body>
+</html>
